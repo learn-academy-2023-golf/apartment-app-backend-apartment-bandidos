@@ -38,4 +38,236 @@ RSpec.describe "Apartments", type: :request do
         
     end
   end
+  describe "POST /create" do
+    it "creates an apartment" do
+      apartment_params = {
+        apartment: {
+          street: "123 A Street",
+          unit: "1",
+          city: "Los Cabos",
+          state: "CA",
+          square_footage: 3000,
+          price: 1900,
+          bedrooms: 3,
+          bathrooms: 4,
+          pets: "spiders only",
+          image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+          user_id: user.id
+        }}
+      post '/apartments', params: apartment_params
+
+      apartment = Apartment.first
+      expect(response).to have_http_status(200)
+      expect(apartment.street).to eq("123 A Street")
+      expect(apartment.unit).to eq("1")
+      expect(apartment.city).to eq("Los Cabos")
+      expect(apartment.state).to eq("CA")
+      expect(apartment.square_footage).to eq(3000)
+      expect(apartment.price).to eq("1900")
+      expect(apartment.bedrooms).to eq(3)
+      expect(apartment.bathrooms).to eq(4)
+      expect(apartment.pets).to eq("spiders only")
+      expect(apartment.image).to eq("https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+      expect(apartment.user_id).to eq(user.id)
+    end
+  end
+  it "doesn't create an apartment without a street" do
+    apartment_params = {
+      apartment: {
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        user_id: user.id
+      }}
+
+      post '/apartments', params: apartment_params
+      expect(response.status).to eq 422
+      json = JSON.parse(response.body)
+      expect(json['street']).to include "can't be blank" 
+  end
+  it "doesn't create an apartment without a unit" do
+    apartment_params = {
+      apartment: {
+        street: "123 A Street",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        user_id: user.id
+      }}
+
+      post '/apartments', params: apartment_params
+      expect(response.status).to eq 422
+      json = JSON.parse(response.body)
+      expect(json['unit']).to include "can't be blank" 
+  end
+  it "doesn't create an apartment without a city" do
+    apartment_params = {
+      apartment: {
+        street: "123 A Street",
+        unit: "1",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        user_id: user.id
+      }}
+
+      post '/apartments', params: apartment_params
+      expect(response.status).to eq 422
+      json = JSON.parse(response.body)
+      expect(json['city']).to include "can't be blank" 
+  end
+  it "doesn't create an apartment without a state" do
+    apartment_params = {
+      apartment: {
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        user_id: user.id
+      }}
+
+      post '/apartments', params: apartment_params
+      expect(response.status).to eq 422
+      json = JSON.parse(response.body)
+      expect(json['state']).to include "can't be blank" 
+  end
+  it "doesn't create an apartment without a square_footage" do
+    apartment_params = {
+      apartment: {
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        user_id: user.id
+      }}
+
+      post '/apartments', params: apartment_params
+      expect(response.status).to eq 422
+      json = JSON.parse(response.body)
+      expect(json['square_footage']).to include "can't be blank" 
+  end
+  it "doesn't create an apartment without a price" do
+    apartment_params = {
+      apartment: {
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        user_id: user.id
+      }}
+
+      post '/apartments', params: apartment_params
+      expect(response.status).to eq 422
+      json = JSON.parse(response.body)
+      expect(json['price']).to include "can't be blank" 
+  end
+  it "doesn't create an apartment without a bedroom" do
+    apartment_params = {
+      apartment: {
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        user_id: user.id
+      }}
+
+      post '/apartments', params: apartment_params
+      expect(response.status).to eq 422
+      json = JSON.parse(response.body)
+      expect(json['bedrooms']).to include "can't be blank" 
+  end
+  it "doesn't create an apartment without a bathrooms" do
+    apartment_params = {
+      apartment: {
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        user_id: user.id
+      }}
+
+      post '/apartments', params: apartment_params
+      expect(response.status).to eq 422
+      json = JSON.parse(response.body)
+      expect(json['bathrooms']).to include "can't be blank" 
+  end
+  it "doesn't create an apartment without a pet" do
+    apartment_params = {
+      apartment: {
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        user_id: user.id
+      }}
+
+      post '/apartments', params: apartment_params
+      expect(response.status).to eq 422
+      json = JSON.parse(response.body)
+      expect(json['pets']).to include "can't be blank" 
+  end
+  it "doesn't create an apartment without a image" do
+    apartment_params = {
+      apartment: {
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        user_id: user.id
+      }}
+
+      post '/apartments', params: apartment_params
+      expect(response.status).to eq 422
+      json = JSON.parse(response.body)
+      expect(json['image']).to include "can't be blank" 
 end
