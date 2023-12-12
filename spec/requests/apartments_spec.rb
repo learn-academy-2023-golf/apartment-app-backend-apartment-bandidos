@@ -313,7 +313,7 @@ RSpec.describe "Apartments", type: :request do
       expect(apartment.pets).to eq "no spiders"
       expect(apartment.image).to eq "TEST"
     end
-    it "doesn't update an apartment without valid parameters" do
+    it "doesn't update an apartment without valid street" do
       apartment = user.apartments.create(
         street: "123 A Street",
         unit: "1",
@@ -329,14 +329,203 @@ RSpec.describe "Apartments", type: :request do
       apartment_params = {
         apartment: {
           street: "",
+          user_id: user.id
+        }
+      }
+      patch "/apartments/#{apartment.id}", params: apartment_params
+      expect(response.status).to eq 422
+    end
+    it "doesn't update an apartment without valid unit" do
+      apartment = user.apartments.create(
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+        
+      apartment_params = {
+        apartment: {
           unit: "",
+          user_id: user.id
+        }
+      }
+      patch "/apartments/#{apartment.id}", params: apartment_params
+      expect(response.status).to eq 422
+    end
+    it "doesn't update an apartment without valid city" do
+      apartment = user.apartments.create(
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+        
+      apartment_params = {
+        apartment: {
           city: "",
+          user_id: user.id
+        }
+      }
+      patch "/apartments/#{apartment.id}", params: apartment_params
+      expect(response.status).to eq 422
+    end
+    it "doesn't update an apartment without valid state" do
+      apartment = user.apartments.create(
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+        
+      apartment_params = {
+        apartment: {
           state: "",
+          user_id: user.id
+        }
+      }
+      patch "/apartments/#{apartment.id}", params: apartment_params
+      expect(response.status).to eq 422
+    end
+    it "doesn't update an apartment without valid square footage" do
+      apartment = user.apartments.create(
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+        
+      apartment_params = {
+        apartment: {
           square_footage: nil,
+          user_id: user.id
+        }
+      }
+      patch "/apartments/#{apartment.id}", params: apartment_params
+      expect(response.status).to eq 422
+    end
+    it "doesn't update an apartment without valid price" do
+      apartment = user.apartments.create(
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+        
+      apartment_params = {
+        apartment: {
           price: nil,
+          user_id: user.id
+        }
+      }
+      patch "/apartments/#{apartment.id}", params: apartment_params
+      expect(response.status).to eq 422
+    end
+    it "doesn't update an apartment without valid bedrooms" do
+      apartment = user.apartments.create(
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+        
+      apartment_params = {
+        apartment: {
           bedrooms: nil,
+          user_id: user.id
+        }
+      }
+      patch "/apartments/#{apartment.id}", params: apartment_params
+      expect(response.status).to eq 422
+    end
+    it "doesn't update an apartment without valid bathrooms" do
+      apartment = user.apartments.create(
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+        
+      apartment_params = {
+        apartment: {
           bathrooms: nil,
+          user_id: user.id
+        }
+      }
+      patch "/apartments/#{apartment.id}", params: apartment_params
+      expect(response.status).to eq 422
+    end
+    it "doesn't update an apartment without valid pets" do
+      apartment = user.apartments.create(
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+        
+      apartment_params = {
+        apartment: {
           pets: "",
+          user_id: user.id
+        }
+      }
+      patch "/apartments/#{apartment.id}", params: apartment_params
+      expect(response.status).to eq 422
+    end
+    it "doesn't update an apartment without valid image" do
+      apartment = user.apartments.create(
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+        
+      apartment_params = {
+        apartment: {
           image: "",
           user_id: user.id
         }
