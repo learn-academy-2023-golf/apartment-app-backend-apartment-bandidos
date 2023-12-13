@@ -534,4 +534,29 @@ RSpec.describe "Apartments", type: :request do
       expect(response.status).to eq 422
     end
   end
+  describe "DELETE /destroy" do
+    it "removes an aparment" do
+      apartment = user.apartments.create(
+        street: "123 A Street",
+        unit: "1",
+        city: "Los Cabos",
+        state: "CA",
+        square_footage: 3000,
+        price: 1900,
+        bedrooms: 3,
+        bathrooms: 4,
+        pets: "spiders only",
+        image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D")
+        delete "/apartments/#{apartment.id}"
+        expect(response.status).to eq 200
+        apartments = Apartment.all
+        expect(apartments).to be_empty
+    end
+    it "doesn't remove an apartment with an invalid ID" do
+        expect { delete "/apartments/invalid_id" }.to raise_error(ActiveRecord::RecordNotFound)
+    end
+    it "doesn't remove an apartment with no ID" do
+      expect { delete "/apartments/"}.to raise_error(ActionController::RoutingError)
+    end
+  end
 end
